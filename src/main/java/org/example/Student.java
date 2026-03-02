@@ -157,11 +157,17 @@ public class Student {
         System.out.println("   (по среднему баллу ↓, затем по имени)");
         System.out.println("══════════════════════════════════════════");
 
-        students.sort(Comparator
-                .comparingDouble(Student::getAverage)
-                .reversed()
-                .thenComparing(Student::getName)
-        );
+        Collections.sort(students, new Comparator<Student>() {
+            @Override
+            public int compare(Student a, Student b) {
+
+                if (b.getAverage() != a.getAverage()) {
+                    return Double.compare(b.getAverage(), a.getAverage());
+                }
+
+                return a.getName().compareTo(b.getName());
+            }
+        });
 
         for (Student s : students) {
             System.out.println(s.getName() +
